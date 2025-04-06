@@ -1,0 +1,16 @@
+name: AutoSync Upstream
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'  # Runs every 12 hours
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Sync fork
+        run: gh repo sync ${{ github.repository }} -b master --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
